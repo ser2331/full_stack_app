@@ -49,7 +49,7 @@ router.post(
   '/login',
   [
     check('email', 'Введите корректный email').normalizeEmail().isEmail(),
-    check('password','Введите пароль').exists()
+    check('password', 'Введите пароль').exists()
   ],
   async(req, res) => {
     try {
@@ -62,12 +62,12 @@ router.post(
         })
       }
 
-      const { email, password} = req.body
+      const { email, password } = req.body
 
       const user = await User.findOne({ email })
 
       if(!user) {
-        return res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова...'})
+        return res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова...' })
       }
 
       const isMatch = await bcrypt.compare(password, user.password)
@@ -79,10 +79,10 @@ router.post(
       const token = jwt.sign(
         { userId: user.id },
         config.get('jwtSecret'),
-        { expiresIn: '1h'}
+        { expiresIn: '1h' }
       )
 
-      res.json({ token, userId: user.id})
+      res.json({ token, userId: user.id })
 
     } catch(e) {
       res.status(500).json({ message: 'Что-то пошло не так, попробуйте снова...' })
