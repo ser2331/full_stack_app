@@ -29,12 +29,10 @@ export const AuthPage = () => {
       const data = await request(
         'api/auth/register',
         'POST',
-        // @ts-ignore
         { ...form }
       )
       console.log('Data', data);
-    } catch(e) {
-    }
+    } catch(e) {}
   };
 
   const loginHandler = async() => {
